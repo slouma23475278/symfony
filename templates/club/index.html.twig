@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Clubs{% endblock %}
+
+{% block body %}
+    <h1>Liste des Clubs</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom du Club</th>
+                <th>Fonction du Club</th>
+                <th>Description du Club</th>
+                <th>Logo du Club</th>
+                <th>Trésorerie du Club</th>
+                <th>Local du Club</th>
+                <th>Nombre d'Étudiants du Club</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for club in clubs %}
+                <tr>
+                    <td>{{ club.id }}</td>
+                    <td>{{ club.NomClub }}</td>
+                    <td>{{ club.FonctionClub }}</td>
+                    <td>{{ club.DescriptionClub }}</td>
+                    <td>{{ club.LogoClub }}</td>
+                    <td>{{ club.TresorieClub }}</td>
+                    <td>{{ club.LocalClub }}</td>
+                    <td>{{ club.NombreStudentClub }}</td>
+                    <td>
+                        <a href="{{ path('club_show', {'id': club.id}) }}">Voir</a>
+                        <a href="{{ path('club_edit', {'id': club.id}) }}">Éditer</a>
+                        {{ include('club/_delete_form.html.twig', {'club': club}) }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">Aucun club trouvé.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('club_new') }}">Aj

@@ -1,0 +1,49 @@
+{% extends 'Front/front.html.twig' %}
+{% block title %}Club{% endblock %}
+{% block body %}
+    <h1>Club</h1>
+
+    <table class="table" border="3">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ club.id }}</td>
+            </tr>
+            <tr>
+                <th>NomClub</th>
+                <td>{{ club.NomClub }}</td>
+            </tr>
+            <tr>
+                <th>FonctionClub</th>
+                <td>{{ club.FonctionClub }}</td>
+            </tr>
+            <tr>
+                <th>DescriptionClub</th>
+                <td>{{ club.DescriptionClub }}</td>
+            </tr>
+            <tr>
+                <th>LogoClub</th>
+                <td>{{ club.LogoClub }}</td>
+            </tr>
+            <tr>
+                <th>TresorieClub</th>
+                <td>{{ club.TresorieClub }}</td>
+            </tr>
+            <tr>
+                <th>LocalClub</th>
+                <td>{{ club.LocalClub }}</td>
+            </tr>
+            <tr>
+                <th>NombreStudentClub</th>
+                <td>{{ club.NombreStudentClub }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_club_index') }}">back to list</a>
+
+    <a href="{{ path('app_club_edit', {'id': club.id}) }}">edit</a>
+    {{include('')}}
+    {%endblock%}
+
+  
