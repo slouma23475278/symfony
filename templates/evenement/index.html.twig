@@ -1,4 +1,3 @@
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Evenement index{% endblock %}
@@ -10,13 +9,13 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>NomClub</th>
-                <th>FonctionClub</th>
-                <th>DescripitonClub</th>
-                <th>LogoClub</th>
-                <th>TresorieClub</th>
-                <th>LocalClub</th>
-                <th>NombreStudentClub</th>
+                <th>TypeEvenement</th>
+                <th>NomEvenement</th>
+                <th>DescriptionEvenement</th>
+                <th>TimeEventDebut</th>
+                <th>TimeEventFin</th>
+                <th>LienFichier</th>
+                <th>DestinationEvenement</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -24,13 +23,13 @@
         {% for evenement in evenements %}
             <tr>
                 <td>{{ evenement.id }}</td>
-                <td>{{ evenement.NomClub }}</td>
-                <td>{{ evenement.FonctionClub }}</td>
-                <td>{{ evenement.DescripitonClub }}</td>
-                <td>{{ evenement.LogoClub }}</td>
-                <td>{{ evenement.TresorieClub }}</td>
-                <td>{{ evenement.LocalClub }}</td>
-                <td>{{ evenement.NombreStudentClub }}</td>
+                <td>{{ evenement.typeEvenement }}</td>
+                <td>{{ evenement.nomEvenement }}</td>
+                <td>{{ evenement.descriptionEvenement }}</td>
+                <td>{{ evenement.timeEventDebut ? evenement.timeEventDebut|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ evenement.timeEventFin ? evenement.timeEventFin|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ evenement.lienFichier }}</td>
+                <td>{{ evenement.destinationEvenement }}</td>
                 <td>
                     <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}">show</a>
                     <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}">edit</a>

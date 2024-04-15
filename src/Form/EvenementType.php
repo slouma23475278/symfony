@@ -12,13 +12,15 @@ class EvenementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('NomClub')
-            ->add('FonctionClub')
-            ->add('DescripitonClub')
-            ->add('LogoClub')
-            ->add('TresorieClub')
-            ->add('LocalClub')
-            ->add('NombreStudentClub')
+            ->add('typeEvenement')
+            ->add('nomEvenement')
+            ->add('descriptionEvenement')
+            ->add('timeEventDebut')
+            ->add('timeEventFin')
+            ->add('lienFichier')
+            ->add('destinationEvenement')
+            ->add('club')
+            ->add('lecture')
         ;
     }
 

@@ -11,115 +11,147 @@ class Evenement
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(name: "IdEvent", type: "integer", nullable: true)]
     private ?int $id = null;
 
-    #[ORM\Column(length: 20)]
-    private ?string $NomClub = null;
+    #[ORM\Column(name: "TypeEvent", length: 255)]
+    private ?string $typeEvenement = null;
 
-    #[ORM\Column(length: 10)]
-    private ?string $FonctionClub = null;
+    #[ORM\Column(name: "NomEvent", length: 255)]
+    private ?string $nomEvenement = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $DescripitonClub = null;
+    #[ORM\Column(name: "Description", length: 255)]
+    private ?string $descriptionEvenement = null;
 
-    #[ORM\Column(type: Types::BLOB)]
-    private $LogoClub = null;
+    #[ORM\Column(name: "TimeEventD", type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $timeEventDebut = null;
 
-    #[ORM\Column]
-    private ?float $TresorieClub = null;
+    #[ORM\Column(name: "TimeEventF", type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $timeEventFin = null;
 
-    #[ORM\Column]
-    private ?int $LocalClub = null;
+    #[ORM\Column(name: "LienFichier", length: 255)]
+    private ?string $lienFichier = null;
 
-    #[ORM\Column]
-    private ?int $NombreStudentClub = null;
+    #[ORM\Column(name: "DateEvent", length: 255)]
+    private ?string $destinationEvenement = null;
+
+    #[ORM\ManyToOne(inversedBy: 'evenements')]
+    #[ORM\JoinColumn(name: "IdClub", referencedColumnName: "IdClub")]
+    private ?Club $club = null;
+
+    #[ORM\ManyToOne(inversedBy: 'evenements')]
+    #[ORM\JoinColumn(name: "IdLecture", referencedColumnName: "IdLecture")]
+    private ?Lecture $lecture = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNomClub(): ?string
+    public function getTypeEvenement(): ?string
     {
-        return $this->NomClub;
+        return $this->typeEvenement;
     }
 
-    public function setNomClub(string $NomClub): static
+    public function setTypeEvenement(string $typeEvenement): static
     {
-        $this->NomClub = $NomClub;
+        $this->typeEvenement = $typeEvenement;
 
         return $this;
     }
 
-    public function getFonctionClub(): ?string
+    public function getNomEvenement(): ?string
     {
-        return $this->FonctionClub;
+        return $this->nomEvenement;
     }
 
-    public function setFonctionClub(string $FonctionClub): static
+    public function setNomEvenement(string $nomEvenement): static
     {
-        $this->FonctionClub = $FonctionClub;
+        $this->nomEvenement = $nomEvenement;
 
         return $this;
     }
 
-    public function getDescripitonClub(): ?string
+    public function getDescriptionEvenement(): ?string
     {
-        return $this->DescripitonClub;
+        return $this->descriptionEvenement;
     }
 
-    public function setDescripitonClub(string $DescripitonClub): static
+    public function setDescriptionEvenement(string $descriptionEvenement): static
     {
-        $this->DescripitonClub = $DescripitonClub;
+        $this->descriptionEvenement = $descriptionEvenement;
 
         return $this;
     }
 
-    public function getLogoClub()
+    public function getTimeEventDebut(): ?\DateTimeInterface
     {
-        return $this->LogoClub;
+        return $this->timeEventDebut;
     }
 
-    public function setLogoClub($LogoClub): static
+    public function setTimeEventDebut(\DateTimeInterface $timeEventDebut): static
     {
-        $this->LogoClub = $LogoClub;
+        $this->timeEventDebut = $timeEventDebut;
 
         return $this;
     }
 
-    public function getTresorieClub(): ?float
+    public function getTimeEventFin(): ?\DateTimeInterface
     {
-        return $this->TresorieClub;
+        return $this->timeEventFin;
     }
 
-    public function setTresorieClub(float $TresorieClub): static
+    public function setTimeEventFin(\DateTimeInterface $timeEventFin): static
     {
-        $this->TresorieClub = $TresorieClub;
+        $this->timeEventFin = $timeEventFin;
 
         return $this;
     }
 
-    public function getLocalClub(): ?int
+    public function getLienFichier(): ?string
     {
-        return $this->LocalClub;
+        return $this->lienFichier;
     }
 
-    public function setLocalClub(int $LocalClub): static
+    public function setLienFichier(string $lienFichier): static
     {
-        $this->LocalClub = $LocalClub;
+        $this->lienFichier = $lienFichier;
 
         return $this;
     }
 
-    public function getNombreStudentClub(): ?int
+    public function getDestinationEvenement(): ?string
     {
-        return $this->NombreStudentClub;
+        return $this->destinationEvenement;
     }
 
-    public function setNombreStudentClub(int $NombreStudentClub): static
+    public function setDestinationEvenement(string $destinationEvenement): static
     {
-        $this->NombreStudentClub = $NombreStudentClub;
+        $this->destinationEvenement = $destinationEvenement;
+
+        return $this;
+    }
+
+    public function getClub(): ?club
+    {
+        return $this->club;
+    }
+
+    public function setClub(?club $club): static
+    {
+        $this->club = $club;
+
+        return $this;
+    }
+
+    public function getLecture(): ?lecture
+    {
+        return $this->lecture;
+    }
+
+    public function setLecture(?lecture $lecture): static
+    {
+        $this->lecture = $lecture;
 
         return $this;
     }

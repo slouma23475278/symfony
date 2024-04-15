@@ -15,7 +15,6 @@ class ClubType extends AbstractType
             ->add('NomClub')
             ->add('FonctionClub')
             ->add('DescriptionClub')
-            ->add('LogoClub')
             ->add('TresorieClub')
             ->add('LocalClub')
             ->add('NombreStudentClub')

@@ -1,41 +1,50 @@
+{% extends 'base.html.twig' %}
 
+{% block title %}Evenement{% endblock %}
+
+{% block body %}
     <h1>Evenement</h1>
 
-    <table class="table" border ="3">
+    <table class="table">
         <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ evenement.id }}</td>
             </tr>
             <tr>
-                <th>NomClub</th>
-                <td>{{ evenement.NomClub }}</td>
+                <th>TypeEvenement</th>
+                <td>{{ evenement.typeEvenement }}</td>
             </tr>
             <tr>
-                <th>FonctionClub</th>
-                <td>{{ evenement.FonctionClub }}</td>
+                <th>NomEvenement</th>
+                <td>{{ evenement.nomEvenement }}</td>
             </tr>
             <tr>
-                <th>DescripitonClub</th>
-                <td>{{ evenement.DescripitonClub }}</td>
+                <th>DescriptionEvenement</th>
+                <td>{{ evenement.descriptionEvenement }}</td>
             </tr>
             <tr>
-                <th>LogoClub</th>
-                <td>{{ evenement.LogoClub }}</td>
+                <th>TimeEventDebut</th>
+                <td>{{ evenement.timeEventDebut ? evenement.timeEventDebut|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>TresorieClub</th>
-                <td>{{ evenement.TresorieClub }}</td>
+                <th>TimeEventFin</th>
+                <td>{{ evenement.timeEventFin ? evenement.timeEventFin|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>LocalClub</th>
-                <td>{{ evenement.LocalClub }}</td>
+                <th>LienFichier</th>
+                <td>{{ evenement.lienFichier }}</td>
             </tr>
             <tr>
-                <th>NombreStudentClub</th>
-                <td>{{ evenement.NombreStudentClub }}</td>
+                <th>DestinationEvenement</th>
+                <td>{{ evenement.destinationEvenement }}</td>
             </tr>
         </tbody>
     </table>
 
-  
+    <a href="{{ path('app_evenement_index') }}">back to list</a>
+
+    <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}">edit</a>
+
+    {{ include('evenement/_delete_form.html.twig') }}
+{% endblock %}

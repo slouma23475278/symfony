@@ -30,6 +30,7 @@ class ClubController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $club->setLogoClub(1);
             $entityManager->persist($club);
             $entityManager->flush();
 
@@ -43,9 +44,8 @@ class ClubController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_club_show', methods: ['GET'])]
-    public function showClub(Club $club): Response
+    public function show(Club $club): Response
     {
-
         return $this->render('club/show.html.twig', [
             'club' => $club,
         ]);
