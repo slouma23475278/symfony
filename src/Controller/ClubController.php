@@ -22,6 +22,14 @@ class ClubController extends AbstractController
         ]);
     }
 
+    #[Route('/front', name: 'app_club_index_front', methods: ['GET'])]
+    public function indexFront(ClubRepository $clubRepository): Response
+    {
+        return $this->render('club/indexFront.html.twig', [
+            'clubs' => $clubRepository->findAll(),
+        ]);
+    }
+
     #[Route('/new', name: 'app_club_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
