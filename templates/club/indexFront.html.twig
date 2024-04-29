@@ -1,34 +1,31 @@
 {% extends 'baseFront.html.twig' %}
 
-{% block body %}
-<section class="categories-section spad">
-    <div class="container">
-        <div class="section-title">
-            <h2>Our Clubs </h2>
-            <p>You can see Our club here and enroll if you want .</p>
-            <br>
-        </div>
-        <div class="row">
+{% block title %}Clubs Index{% endblock %}
 
+{% block body %}
+    <div class="container">
+        <h2 class="section-title">Our Clubs</h2>
+
+        <div class="row">
             {% for club in clubs %}
-            <!-- categorie -->
-                            <div class="col-lg-4 col-md-6">
-                                <div class="categorie-item">
-                                    <div class="ci-thumb set-bg" data-setbg="{{ asset('front-assets/img/categories/7.jpg') }}"></div>
-                                    <div class="ci-text">
-                                        <h5>{{ club.NomClub }}</h5>
-                                        <p>{{ club.DescriptionClub }}</p>
-                                        <span>{{ club.NombreStudentClub }}</span>
-                                    </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">{{ club.nomClub }}</div>
+                        <div class="card-body">
+                            {% if club.logoClub %}
+                                <div class="d-flex justify-content-center">  <!-- Centers the image horizontally -->
+                                    <img src="data:image/png;base64,{{ club.logoClub|base64_encode }}" alt="Club Logo" width="150">
                                 </div>
-                            </div>
-                            {% else %}
-                            <br>
-                                <h2>no records found</h2>
-                            <br>
-                        {% endfor %}
+                            {% endif %}
+                            <p>{{ club.descriptionClub }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{{ path('app_club_show', {'id': club.id}) }}" class="btn btn-primary">More Info</a>
+                        </div>
                     </div>
                 </div>
-            </section>
 
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

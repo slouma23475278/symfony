@@ -1,0 +1,121 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}Club Details{% endblock %}
+
+{% block body %}
+    <div id="club-details" class="features-section">
+        <div class="container text-center">
+            <h2 class="section-title">{{ club.nomClub }} - Club Details</h2>
+            <p class="intro">{{ club.descriptionClub }}</p>
+
+            <div class="tabbed-area row">
+                <!-- Navigation for Tabs -->
+                <div class="feature-nav nav nav-pill flex-column col-lg-4 col-md-6 col-12 order-0 order-md-1" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active mb-lg-3" href="#feature-1" aria-controls="feature-1" data-bs-toggle="pill" role="tab" aria-selected="true">
+                        <i class="fa-solid fa-info-circle me-2"></i>Overview
+                    </a>
+                    <a class="nav-link mb-lg-3" href="#feature-2" aria-controls="feature-2" data-bs-toggle="pill" role="tab" aria-selected="false">
+                        <i class="fa-solid fa-image me-2"></i>Logo
+                    </a>
+                    <a class="nav-link mb-lg-3" href="#feature-3" aria-controls="feature-3" data-bs-toggle="pill" role="tab" aria-selected="false">
+                        <i class="fa-solid fa-users me-2"></i>Members
+                    </a>
+                    <a class="nav-link mb-lg-3" href="#feature-4" aria-controls="feature-4" data-bs-toggle="pill" role="tab" aria-selected="false">
+                        <i class="fa-solid fa-map-marker-alt me-2"></i>Location
+                    </a>
+                </div>
+
+                <!-- Tab Contents -->
+                <div class="feature-content tab-content col-lg-8 col-md-6 col-12 order-1 order-md-0">
+                    <!-- Overview Tab -->
+                    <div role="tabpanel" class="tab-pane fade show active" id="feature-1">
+                        <h3>About the Club</h3>
+                        <p>Function: {{ club.fonctionClub }}</p>
+                        <p>Members: {{ club.nombreStudentClub }}</p>
+                        <p>Treasury: {{ club.tresorieClub }}</p>
+
+                        <!-- Add Chart Canvas for Club Members -->
+                        <h4>Club Members</h4>
+                        <canvas id="membersChart"></canvas>
+
+                        <!-- Add Chart Canvas for Club Treasury -->
+                        <h4>Club Treasury</h4>
+                        <canvas id="treasuryChart"></canvas>
+                    </div>
+
+
+                    <!-- Logo Tab -->
+                    <div role="tabpanel" class="tab-pane fade" id="feature-2">
+                        {% if club.logoClub %}
+                            <img class="img-fluid" src="data:image/png;base64,{{ club.logoClub|base64_encode }}" alt="{{ club.nomClub }} Logo" />
+                        {% else %}
+                            <p>No logo available.</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Members Tab -->
+                    <div role="tabpanel" class="tab-pane fade" id="feature-3">
+                        <h3>Members</h3>
+                        <p>Total Members: {{ club.nombreStudentClub }}</p>
+                    </div>
+
+                    <!-- Location Tab -->
+                    <div role="tabpanel" class="tab-pane fade" id="feature-4">
+                        <h3>Location</h3>
+                        <p>{{ club.localClub }}</p>
+                    </div>
+                </div><!--//feature-content-->
+            </div><!--//tabbed-area-->
+        </div><!--//container-->
+    </div><!--//features-section-->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var ctxMembers = document.getElementById("membersChart").getContext("2d");
+            new Chart(ctxMembers, {
+                type: "bar",
+                data: {
+                    labels: ["Members"],
+                    datasets: [{
+                        label: "Number of Members",
+                        data: [{{ club.nombreStudentClub }}],
+                        backgroundColor: "rgba(75, 192, 192, 0.6)",
+                        borderColor: "rgba(75, 192, 192, 1)",
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            var ctxTreasury = document.getElementById("treasuryChart").getContext("2d");
+            new Chart(ctxTreasury, {
+                type: "line",
+                data: {
+                    labels: ["Current"],
+                    datasets: [{
+                        label: "Club Treasury",
+                        data: [{{ club.tresorieClub }}],
+                        backgroundColor: "rgba(54, 162, 235, 0.6)",
+                        borderColor: "rgba(54, 162, 235, 1)",
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

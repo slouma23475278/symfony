@@ -1,47 +1,33 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseFront.html.twig' %}
 
 {% block title %}Evenement index{% endblock %}
 
 {% block body %}
-    <h1>Evenement index</h1>
+    <div id="events" class="events-section">
+        <div class="container text-center">
+            <h2 class="section-title">Upcoming Events</h2>
+            <p class="intro">Don't miss out! Here's a list of our upcoming events.</p>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>TypeEvenement</th>
-                <th>NomEvenement</th>
-                <th>DescriptionEvenement</th>
-                <th>TimeEventDebut</th>
-                <th>TimeEventFin</th>
-                <th>LienFichier</th>
-                <th>DestinationEvenement</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for evenement in evenements %}
-            <tr>
-                <td>{{ evenement.id }}</td>
-                <td>{{ evenement.typeEvenement }}</td>
-                <td>{{ evenement.nomEvenement }}</td>
-                <td>{{ evenement.descriptionEvenement }}</td>
-                <td>{{ evenement.timeEventDebut ? evenement.timeEventDebut|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ evenement.timeEventFin ? evenement.timeEventFin|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ evenement.lienFichier }}</td>
-                <td>{{ evenement.destinationEvenement }}</td>
-                <td>
-                    <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}">show</a>
-                    <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_evenement_new') }}">Create new</a>
+            <div class="items-wrapper row">
+                {% for evenement in evenements %}
+                    <div class="item col-md-4 col-12">
+                        <div class="item-inner">
+                            <div class="figure-holder">
+                                {% if evenement.lienFichier %}
+                                    <img class="figure-image" width="200" src="{{ asset('uploads/' ~ evenement.lienFichier) }}" alt="{{ evenement.nomEvenement }}">
+                                {% endif %}
+                            </div>
+                            <h3 class="item-title">{{ evenement.nomEvenement }}</h3>
+                            <div class="item-desc mb-3">
+                                <p >Type: {{ evenement.typeEvenement }}</p>
+                                <p>Description:     {{ evenement.descriptionEvenement|slice(0, 100) }}...</p>
+                                <p>Date: {{ evenement.timeEventDebut ? evenement.timeEventDebut|date('Y-m-d') : '' }}</p>
+                            </div>
+                            <a class="btn btn-primary" href="{{ path('app_evenement_show', {'id': evenement.id}) }}">Learn More</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

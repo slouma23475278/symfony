@@ -1,50 +1,92 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseFront.html.twig' %}
 
 {% block title %}Evenement{% endblock %}
 
 {% block body %}
-    <h1>Evenement</h1>
+    <div id="features" class="features-section">
+        <div class="container text-center">
+            <h2 class="section-title">Event Details</h2>
+            <p class="intro">{{ evenement.descriptionEvenement }} </p>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ evenement.id }}</td>
-            </tr>
-            <tr>
-                <th>TypeEvenement</th>
-                <td>{{ evenement.typeEvenement }}</td>
-            </tr>
-            <tr>
-                <th>NomEvenement</th>
-                <td>{{ evenement.nomEvenement }}</td>
-            </tr>
-            <tr>
-                <th>DescriptionEvenement</th>
-                <td>{{ evenement.descriptionEvenement }}</td>
-            </tr>
-            <tr>
-                <th>TimeEventDebut</th>
-                <td>{{ evenement.timeEventDebut ? evenement.timeEventDebut|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>TimeEventFin</th>
-                <td>{{ evenement.timeEventFin ? evenement.timeEventFin|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>LienFichier</th>
-                <td>{{ evenement.lienFichier }}</td>
-            </tr>
-            <tr>
-                <th>DestinationEvenement</th>
-                <td>{{ evenement.destinationEvenement }}</td>
-            </tr>
-        </tbody>
-    </table>
+            <div class="tabbed-area row">
 
-    <a href="{{ path('app_evenement_index') }}">back to list</a>
+                <!-- Nav tabs -->
+                <div class="feature-nav nav nav-pill flex-column col-lg-4 col-md-6 col-12 order-0 order-md-1" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active mb-lg-3" href="#feature-1" aria-controls="feature-1" data-bs-toggle="pill" role="tab" aria-selected="true"><i class="fa-solid fa-magic me-2"></i>{{ evenement.nomEvenement }}</a>
+                    <a class="nav-link mb-lg-3" href="#feature-2" aria-controls="feature-2" data-bs-toggle="pill" role="tab" aria-selected="false"><i class="fa-solid fa-cubes me-2"></i>100+ Participants</a>
+                    <a class="nav-link mb-lg-3" href="#feature-3" aria-controls="feature-3" data-bs-toggle="pill" role="tab" aria-selected="false"><i class="fa-solid fa-chart-bar me-2"></i>{{ evenement.typeEvenement }}</a>
+                    <a class="nav-link mb-lg-3" href="#feature-4" aria-controls="feature-4" data-bs-toggle="pill" role="tab" aria-selected="false"><i class="fa-solid fa-code me-2"></i>Details</a>
+                    <a class="nav-link mb-lg-3" href="#feature-5" aria-controls="feature-5" data-bs-toggle="pill" role="tab" aria-selected="false"><i class="fa-solid fa-rocket me-2"></i>New Event</a>
+                    <a class="nav-link mb-lg-3" href="#feature-6" aria-controls="feature-6" data-bs-toggle="pill" role="tab" aria-selected="false"><i class="fa-solid fa-mobile-alt me-2"></i>{{ evenement.descriptionEvenement|slice(0, 100) }}...</a>
+                    <a class="nav-link mb-lg-3" href="#feature-7" aria-controls="feature-7" data-bs-toggle="pill" role="tab" aria-selected="false"><i class="fa-solid fa-star me-2"></i>{{ evenement.timeEventDebut ? evenement.timeEventDebut|date('Y-m-d') : '' }}</a>
+                            <a class="nav-link mb-lg-3" href="#feature-8" aria-controls="feature-8" data-bs-toggle="pill" role="tab" aria-selected="false"><i class="fa-solid fa-heart me-2"></i>Join us !!</a>
+                </div>
 
-    <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}">edit</a>
+                <!-- Tab panes -->
+                <div class="feature-content tab-content col-lg-8 col-md-6 col-12 order-1 order-md-0">
+                    <div role="tabpanel" class="tab-pane fade show active" id="feature-1">
+                        <a href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/appkit-landing-free-bootstrap-theme-for-developers-and-startups/" target="_blank"><img class="img-fluid" src="{{ asset('uploads/' ~ evenement.lienFichier) }}" alt="screenshot" ></a>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="feature-2">
+                        <a href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/appkit-landing-free-bootstrap-theme-for-developers-and-startups/" target="_blank"><img class="img-fluid" src="{{ asset('uploads/' ~ evenement.lienFichier) }}" alt="screenshot" ></a>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="feature-3">
+                        <a href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/appkit-landing-free-bootstrap-theme-for-developers-and-startups/" target="_blank"><img class="img-fluid" src="{{ asset('uploads/' ~ evenement.lienFichier) }}" alt="screenshot" ></a>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="feature-4">
+                        <a href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/appkit-landing-free-bootstrap-theme-for-developers-and-startups/" target="_blank"><img class="img-fluid" src="{{ asset('uploads/' ~ evenement.lienFichier) }}" alt="screenshot" ></a>
+                    </div>
 
-    {{ include('evenement/_delete_form.html.twig') }}
+
+                </div><!--//feature-content-->
+
+
+            </div><!--//tabbed-area-->
+
+        </div><!--//container-->
+    </div><!--//features-->
+{#    <h1>Evenement</h1>#}
+
+{#    <table class="table">#}
+{#        <tbody>#}
+{#            <tr>#}
+{#                <th>Id</th>#}
+{#                <td>{{ evenement.id }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>TypeEvenement</th>#}
+{#                <td>{{ evenement.typeEvenement }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>NomEvenement</th>#}
+{#                <td>{{ evenement.nomEvenement }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>DescriptionEvenement</th>#}
+{#                <td>{{ evenement.descriptionEvenement }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>TimeEventDebut</th>#}
+{#                <td>{{ evenement.timeEventDebut ? evenement.timeEventDebut|date('Y-m-d H:i:s') : '' }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>TimeEventFin</th>#}
+{#                <td>{{ evenement.timeEventFin ? evenement.timeEventFin|date('Y-m-d H:i:s') : '' }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>LienFichier</th>#}
+{#                <td>{{ evenement.lienFichier }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>DestinationEvenement</th>#}
+{#                <td>{{ evenement.destinationEvenement }}</td>#}
+{#            </tr>#}
+{#        </tbody>#}
+{#    </table>#}
+
+{#    <a href="{{ path('app_evenement_index') }}">back to list</a>#}
+
+{#    <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}">edit</a>#}
+
+{#    {{ include('evenement/_delete_form.html.twig') }}#}
 {% endblock %}

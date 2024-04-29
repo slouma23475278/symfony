@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Evenement index{% endblock %}
+
+{% block body %}
+    <h1>Evenement index</h1>
+    <a href="{{ path('app_evenement_new') }}" class="btn btn-success">Create New</a>
+
+    <a href="{{ path('app_evenement_stat') }}" class="btn btn-info">Statistique</a>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Type</th>
+            <th>Nom</th>
+            <th>TimeEventDebut</th>
+            <th>TimeEventFin</th>
+            <th>Destination</th>
+            <th>Status</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for evenement in pagination %}
+            <tr>
+                <td>{{ evenement.id }}</td>
+                <td>{{ evenement.typeEvenement }}</td>
+                <td>{{ evenement.nomEvenement }}</td>
+                <td>{{ evenement.timeEventDebut ? evenement.timeEventDebut|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ evenement.timeEventFin ? evenement.timeEventFin|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ evenement.destinationEvenement }}</td>
+                <td>
+                    {% if evenement.status %}
+                        <a href="{{ path('app_evenement_confirm', {'id': evenement.id}) }}" class="badge bg-success">Confirmed</a>
+                    {% else %}
+                        <a href="{{ path('app_evenement_confirm', {'id': evenement.id}) }}" class="badge bg-danger">Not Confirmed</a>
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-sm mr-1" href="{{ path('app_evenement_show', {'id': evenement.id}) }}">show</a>
+                    <a class="btn btn-secondary btn-sm mr-1" href="{{ path('app_evenement_edit', {'id': evenement.id}) }}">edit</a>
+                    <form action="{{ path('app_evenement_delete', {'id': evenement.id}) }}" method="post" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ evenement.id) }}">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-center">
+        {{ knp_pagination_render(pagination,'pagination.html.twig') }}
+
+    </div>
+
+{% endblock %}

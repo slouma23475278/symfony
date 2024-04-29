@@ -17,13 +17,14 @@ class ClubController extends AbstractController
     #[Route('/', name: 'app_club_index', methods: ['GET'])]
     public function index(ClubRepository $clubRepository): Response
     {
+
         return $this->render('club/index.html.twig', [
             'clubs' => $clubRepository->findAll(),
         ]);
     }
 
-    #[Route('/front', name: 'app_club_index_front', methods: ['GET'])]
-    public function indexFront(ClubRepository $clubRepository): Response
+    #[Route('/front', name: 'app_club_index', methods: ['GET'])]
+    public function indexfront(ClubRepository $clubRepository): Response
     {
         return $this->render('club/indexFront.html.twig', [
             'clubs' => $clubRepository->findAll(),
@@ -38,7 +39,13 @@ class ClubController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $club->setLogoClub(1);
+
+            $file = $form->get('LogoClub')->getData();
+
+            if ($file) {
+                $fileContent = file_get_contents($file->getPathname());
+                $club->setLogoClub($fileContent);
+            }
             $entityManager->persist($club);
             $entityManager->flush();
 
@@ -55,6 +62,14 @@ class ClubController extends AbstractController
     public function show(Club $club): Response
     {
         return $this->render('club/show.html.twig', [
+            'club' => $club,
+        ]);
+    }
+
+    #[Route('/front/{id}', name: 'app_club_showFront', methods: ['GET'])]
+    public function showFront(Club $club): Response
+    {
+        return $this->render('club/showFront.html.twig', [
             'club' => $club,
         ]);
     }

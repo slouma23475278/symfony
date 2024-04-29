@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Evenement index{% endblock %}
+
+
+
+{% block body %}
+    <div class="container">
+        <h2>Event Statistics</h2>
+
+        <!-- Event Count by Type (Bar Chart) -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">Event Count by Type</div>
+                    <div class="card-body">
+                        <canvas id="eventTypeChart"></canvas> <!-- Canvas for Chart -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmed and Not Confirmed Events (Pie Charts) -->
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Confirmed Events</div>
+                    <div class="card-body">
+                        <canvas id="confirmedEventsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Not Confirmed Events</div>
+                    <div class="card-body">
+                        <canvas id="notConfirmedEventsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upcoming Events (List) -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">Upcoming Events</div>
+                    <div class="card-body">
+                        <ul>
+                            {% for event in upcomingEvents %}
+                                <li>{{ event.nomEvenement }} - {{ event.timeEventDebut|date('Y-m-d H:i:s') }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript to Create Charts with Chart.js -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Bar chart for event count by type
+            var ctx = document.getElementById("eventTypeChart").getContext("2d");
+            new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: [{% for item in eventCountByType %} "{{ item.typeEvenement }}", {% endfor %}],
+                    datasets: [{
+                        label: "Event Count",
+                        data: [{% for item in eventCountByType %} {{ item.count }}, {% endfor %}],
+                        backgroundColor: "rgba(75, 192, 192, 0.6)",
+                        borderColor: "rgba(75, 192, 192, 1)",
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Pie chart for confirmed events
+            var ctxConfirmed = document.getElementById("confirmedEventsChart").getContext("2d");
+            new Chart(ctxConfirmed, {
+                type: "pie",
+                data: {
+                    labels: ["Confirmed", "Not Confirmed"],
+                    datasets: [{
+                        data: [{{ confirmedEvents }}, {{ notConfirmedEvents }}],
+                        backgroundColor: ["rgba(54, 162, 235, 0.6)", "rgba(255, 99, 132, 0.6)"],
+                        borderColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"],
+                        borderWidth: 1
+                    }]
+                }
+            });
+
+            // Pie chart for not confirmed events
+            var ctxNotConfirmed = document.getElementById("notConfirmedEventsChart").getContext("2d");
+            new Chart(ctxNotConfirmed, {
+                type: "pie",
+                data: {
+                    labels: ["Confirmed", "Not Confirmed"],
+                    datasets: [{
+                        data: [{{ confirmedEvents }}, {{ notConfirmedEvents }}],
+                        backgroundColor: ["rgba(54, 162, 235, 0.6)", "rgba(255, 99, 132, 0.6)"],
+                        borderColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"],
+                        borderWidth: 1
+                    }]
+                }
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}

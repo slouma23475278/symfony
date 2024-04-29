@@ -2,9 +2,13 @@
 
 namespace App\Entity;
 
+use App\Enum\EventType;
+use App\Enum\EventTypeUtility;
 use App\Repository\EvenementRepository;
+use App\Validator\Constraints\FutureDate;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
 class Evenement
@@ -14,23 +18,37 @@ class Evenement
     #[ORM\Column(name: "IdEvent", type: "integer", nullable: true)]
     private ?int $id = null;
 
-    #[ORM\Column(name: "TypeEvent", length: 255)]
+    const VALID_TYPES = ['Conference', 'Workshop', 'Seminar', 'Meeting', 'Party'];
+
+    #[ORM\Column(name: "TypeEvent", type: "string", length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Choice(choices: self::VALID_TYPES, message: "Invalid event type.")]
     private ?string $typeEvenement = null;
 
     #[ORM\Column(name: "NomEvent", length: 255)]
+    #[Assert\NotBlank (message: "Please enter the event name.")]
     private ?string $nomEvenement = null;
 
     #[ORM\Column(name: "Description", length: 255)]
+    #[Assert\NotBlank (message: "Please enter the event description.")]
     private ?string $descriptionEvenement = null;
 
     #[ORM\Column(name: "TimeEventD", type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotNull]
+    #[Assert\Type(\DateTimeInterface::class)]
+    #[FutureDate]
     private ?\DateTimeInterface $timeEventDebut = null;
 
     #[ORM\Column(name: "TimeEventF", type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotNull]
+    #[Assert\Type(\DateTimeInterface::class)]
+    #[Assert\GreaterThan(propertyPath: "timeEventDebut", message: "The event end time must be after the start time.")]
     private ?\DateTimeInterface $timeEventFin = null;
 
     #[ORM\Column(name: "LienFichier", length: 255)]
+    #[Assert\NotNull (message: "Please upload an image.")]
     private ?string $lienFichier = null;
+
 
     #[ORM\Column(name: "DateEvent", length: 255)]
     private ?string $destinationEvenement = null;
@@ -42,6 +60,9 @@ class Evenement
     #[ORM\ManyToOne(inversedBy: 'evenements')]
     #[ORM\JoinColumn(name: "IdLecture", referencedColumnName: "IdLecture")]
     private ?Lecture $lecture = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $status = null;
 
     public function getId(): ?int
     {
@@ -154,5 +175,22 @@ class Evenement
         $this->lecture = $lecture;
 
         return $this;
+    }
+
+    public function isStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?bool $status): static
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+    public function __toString(): string
+    {
+        // Return a meaningful representation of the object, such as its name or a combination of properties
+        return (string) $this->getNomEvenement(); // Example, change as needed
     }
 }

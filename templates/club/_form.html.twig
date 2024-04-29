@@ -1,13 +1,13 @@
 <div class="container">
     <div class="row justify-content-center mt-5">
         <div class="col-md-6 border border-dark rounded p-4">
-            
 
             {{ form_start(form, { attr: { novalidate: 'novalidate' } }) }}
 
+            <!-- Display other form fields -->
             {% for field in ['NomClub', 'FonctionClub', 'DescriptionClub', 'TresorieClub', 'LocalClub', 'NombreStudentClub'] %}
-                <div class="form-group">
-                    {{ form_label(form[field], null, {'label_attr': {'class': 'text-dark'}}) }}
+                <div class="form-group mb-3">
+                    {{ form_label(form[field], null, {'label_attr': {'class': 'form-label text-dark'}}) }}
                     {{ form_widget(form[field], {'attr': {'class': 'form-control'}}) }}
                     {% if form_errors(form[field]) %}
                         <div class="text-danger">
@@ -16,6 +16,17 @@
                     {% endif %}
                 </div>
             {% endfor %}
+
+            <!-- LogoClub File Upload Field -->
+            <div class="form-group mb-3">
+                {{ form_label(form.LogoClub, null, {'label_attr': {'class': 'form-label text-dark'}}) }}
+                {{ form_widget(form.LogoClub, {'attr': {'class': 'form-control-file'}}) }}
+                {% if form_errors(form.LogoClub) %}
+                    <div class="text-danger">
+                        {{ form_errors(form.LogoClub) }}
+                    </div>
+                {% endif %}
+            </div>
 
             <button type="submit" class="btn btn-primary">Save</button>
 
